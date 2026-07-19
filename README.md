@@ -19,6 +19,41 @@ A resume-screening tool built with Streamlit, Groq, and Pydantic. Paste a job de
 
 ---
 
+
+
+### 🏗️ Extraction & Scoring Pipeline
+
+`mermaid
+graph TD
+    subgraph "Input Layer"
+    A[Job Description]
+    B[Candidate Resumes PDF/DOCX]
+    end
+    
+    subgraph "Processing Engine"
+    B -->|pypdf / python-docx| C(Raw Text Extraction)
+    C --> D{Prompt Injection}
+    A --> D
+    D -->|Strict JSON Schema| E(Groq LLM)
+    E -->|Pydantic Validation| F[Structured Candidate Profile]
+    end
+    
+    subgraph "Ranking Logic"
+    F --> G(Scoring Algorithm)
+    A --> G
+    G --> H[Ranked Shortlist with Match Details]
+    H --> I[Streamlit Dashboard]
+    end
+    
+    classDef io fill:#f9f0ff,stroke:#8a2be2,stroke-width:2px,color:#000;
+    classDef core fill:#e1f5fe,stroke:#0288d1,stroke-width:2px,color:#000;
+    classDef logic fill:#e8f5e9,stroke:#388e3c,stroke-width:2px,color:#000;
+    
+    class A,B,I io;
+    class C,F,H core;
+    class D,E,G logic;
+`
+
 ## ✨ Features
 
 | | |
