@@ -23,7 +23,7 @@ A resume-screening tool built with Streamlit, Groq, and Pydantic. Paste a job de
 
 ### 🏗️ Extraction & Scoring Pipeline
 
-`mermaid
+```mermaid
 graph TD
     subgraph "Input Layer"
     A[Job Description]
@@ -52,7 +52,7 @@ graph TD
     class A,B,I io;
     class C,F,H core;
     class D,E,G logic;
-`
+```
 
 ## ✨ Features
 
