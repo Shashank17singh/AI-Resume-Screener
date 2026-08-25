@@ -81,9 +81,9 @@ if run_button:
 
                 if m.experience_requirement_met is not None:
                     st.caption(
-                        "✅ Meets experience requirement"
+                        " Meets experience requirement"
                         if m.experience_requirement_met
-                        else "⚠️ Does not meet stated experience requirement"
+                        else " Does not meet stated experience requirement"
                     )
 
                 col_a, col_b = st.columns(2)

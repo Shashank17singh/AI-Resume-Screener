@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🧑‍💼 AI Resume Screener
+# ‍ AI Resume Screener
 **An LLM-powered pipeline that parses resumes and job descriptions into structured data — then ranks candidates by fit**
 
 [![Streamlit](https://img.shields.io/badge/Streamlit-UI-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)](https://streamlit.io/)
@@ -13,7 +13,7 @@
 
 ---
 
-## 📖 Overview
+##  Overview
 
 A resume-screening tool built with Streamlit, Groq, and Pydantic. Paste a job description and upload a batch of resumes (PDF or DOCX) — the app extracts structured data from both, scores every candidate against the role's requirements, and returns a ranked shortlist with matching and missing skills called out per candidate.
 
@@ -21,7 +21,7 @@ A resume-screening tool built with Streamlit, Groq, and Pydantic. Paste a job de
 
 
 
-### 🏗️ Extraction & Scoring Pipeline
+###  Extraction & Scoring Pipeline
 
 ```mermaid
 graph TD
@@ -54,22 +54,22 @@ graph TD
     class D,E,G logic;
 ```
 
-## ✨ Features
+##  Features
 
 | | |
 |---|---|
-| 📋 **Structured JD Parsing** | Extracts role, required/preferred skills, minimum experience, education, and responsibilities from raw job description text |
-| 📄 **Multi-Resume Upload** | Screen a whole batch of PDF/DOCX resumes in one run |
-| 🧩 **Schema-Driven Extraction** | Resumes are parsed into a fixed Pydantic schema regardless of formatting or section headings |
-| ⚡ **Groq-Powered LLM** | Fast structured-JSON inference via `openai/gpt-oss-120b` |
-| 🔁 **Retry with Backoff** | LLM calls retry with exponential backoff instead of failing the whole batch on one hiccup |
-| 💾 **Resume Caching** | Parsed resumes are cached by file hash, so re-screening against a new JD skips redundant LLM calls |
-| 🛡️ **Per-File Error Isolation** | A corrupt or scanned resume is reported and skipped, not a batch-ending crash |
-| 📊 **Ranked Shortlist UI** | Clean Streamlit view of candidates sorted by match score, with skill gaps highlighted |
+|  **Structured JD Parsing** | Extracts role, required/preferred skills, minimum experience, education, and responsibilities from raw job description text |
+|  **Multi-Resume Upload** | Screen a whole batch of PDF/DOCX resumes in one run |
+|  **Schema-Driven Extraction** | Resumes are parsed into a fixed Pydantic schema regardless of formatting or section headings |
+|  **Groq-Powered LLM** | Fast structured-JSON inference via `openai/gpt-oss-120b` |
+|  **Retry with Backoff** | LLM calls retry with exponential backoff instead of failing the whole batch on one hiccup |
+|  **Resume Caching** | Parsed resumes are cached by file hash, so re-screening against a new JD skips redundant LLM calls |
+|  **Per-File Error Isolation** | A corrupt or scanned resume is reported and skipped, not a batch-ending crash |
+|  **Ranked Shortlist UI** | Clean Streamlit view of candidates sorted by match score, with skill gaps highlighted |
 
 ---
 
-## 🧠 Architecture
+##  Architecture
 
 ```
 Job Description (text)              Resumes (PDF / DOCX)
@@ -87,12 +87,12 @@ Job Description (text)              Resumes (PDF / DOCX)
         (score, matching/missing skills, verdict)
                          │
                          ▼
-              Ranked Shortlist (Streamlit) 📊
+              Ranked Shortlist (Streamlit) 
 ```
 
 ---
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
 | Component | Technology |
 |---|---|
@@ -105,7 +105,7 @@ Job Description (text)              Resumes (PDF / DOCX)
 
 ---
 
-## ⚙️ Setup and Installation
+##  Setup and Installation
 
 ### Prerequisites
 - Python 3.11+
@@ -136,7 +136,7 @@ Open the local URL Streamlit prints in your terminal, paste a job description, u
 
 ---
 
-## 📂 Project Structure
+##  Project Structure
 
 ```
 ai-resume-screener/
@@ -152,7 +152,7 @@ ai-resume-screener/
 
 ---
 
-## ⚠️ Known Limitations
+##  Known Limitations
 
 - Scores are LLM-judged rather than a fixed formula, so they can vary slightly between runs on the same inputs.
 - Scanned/image-only PDFs with no extractable text are skipped (reported as a failure, not silently dropped).
