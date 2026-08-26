@@ -21,11 +21,11 @@ Return JSON matching this schema:
 
 Fill in:
 1. candidate_name
-2. matching_skills — skills the candidate has that the job needs
-3. missing_skills — important required skills the candidate is missing
-4. experience_requirement_met — true/false/null if the job gives no minimum
-5. score — overall match percentage from 0 to 100
-6. verdict — a short (1-2 sentence) final verdict
+2. matching_skills - skills the candidate has that the job needs
+3. missing_skills - important required skills the candidate is missing
+4. experience_requirement_met - true/false/null if the job gives no minimum
+5. score - overall match percentage from 0 to 100
+6. verdict - a short (1-2 sentence) final verdict
 
 Keep it concise."""
 

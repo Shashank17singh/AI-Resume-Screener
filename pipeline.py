@@ -2,12 +2,12 @@
 
 Improvements over a naive loop:
 - Per-file try/except so one corrupt/unreadable resume doesn't kill the
-  whole batch — it's reported as a failure and the run continues.
+  whole batch - it's reported as a failure and the run continues.
 - In-memory cache (by file hash) for parsed resumes, so re-running the
   screener against a new/edited job description doesn't re-spend LLM
   calls re-parsing resumes that haven't changed. The cache is injected
   by the caller (e.g. Streamlit session state) rather than written to
-  shared disk, so parsed resumes — which contain candidate PII — never
+  shared disk, so parsed resumes - which contain candidate PII - never
   persist across users/sessions on a shared server.
 - Returns structured results instead of only printing to console, so
   the same pipeline can back a CLI, a Streamlit UI, or tests.
@@ -70,10 +70,10 @@ def screen_folder(
     """Parse and score every resume in `resume_folder` against `job`.
 
     `cache` is an in-memory dict the caller owns (e.g. Streamlit
-    `session_state`) — resumes are never written to shared disk, so
+    `session_state`) - resumes are never written to shared disk, so
     candidate PII doesn't persist beyond the caller's own session.
     `on_progress(file_name, index, total)` is called before each file is
-    processed, if provided — useful for a progress bar in a UI.
+    processed, if provided - useful for a progress bar in a UI.
     """
     if cache is None:
         cache = {}

@@ -30,7 +30,7 @@ def parse_resume(resume_text: str) -> Resume:
     system_prompt = f"""You are an expert AI resume screener. Extract information
 from the resume based on its meaning, not only exact section headings.
 Different resumes use different headings (Experience, Professional
-Experience, Work History, Employment, Internships, etc.) — treat all of
+Experience, Work History, Employment, Internships, etc.) - treat all of
 these as relevant experience. Skills may appear in a skills section, in
 work experience, in internships, or in projects.
 
