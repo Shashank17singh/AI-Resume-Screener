@@ -76,7 +76,7 @@ if run_button:
             m = result.match
             with st.container(border=True):
                 cols = st.columns([3, 1])
-                cols[0].markdown(f"**#{rank} — {m.candidate_name or result.file_name}**")
+                cols[0].markdown(f"**#{rank} - {m.candidate_name or result.file_name}**")
                 cols[1].metric("Match score", f"{m.score:.0f}%")
 
                 if m.experience_requirement_met is not None:
@@ -89,10 +89,10 @@ if run_button:
                 col_a, col_b = st.columns(2)
                 with col_a:
                     st.markdown("**Matching skills**")
-                    st.write(", ".join(m.matching_skills) or "—")
+                    st.write(", ".join(m.matching_skills) or "-")
                 with col_b:
                     st.markdown("**Missing skills**")
-                    st.write(", ".join(m.missing_skills) or "—")
+                    st.write(", ".join(m.missing_skills) or "-")
 
                 st.markdown(f"_{m.verdict}_")
 

@@ -1,7 +1,7 @@
 <div align="center">
 
 # ‍ AI Resume Screener
-**An LLM-powered pipeline that parses resumes and job descriptions into structured data — then ranks candidates by fit**
+**An LLM-powered pipeline that parses resumes and job descriptions into structured data - then ranks candidates by fit**
 
 [![Streamlit](https://img.shields.io/badge/Streamlit-UI-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)](https://streamlit.io/)
 [![Groq](https://img.shields.io/badge/Groq-openai--gpt--oss--120b-F55036?style=for-the-badge&logoColor=white)](https://groq.com/)
@@ -15,7 +15,7 @@
 
 ##  Overview
 
-A resume-screening tool built with Streamlit, Groq, and Pydantic. Paste a job description and upload a batch of resumes (PDF or DOCX) — the app extracts structured data from both, scores every candidate against the role's requirements, and returns a ranked shortlist with matching and missing skills called out per candidate.
+A resume-screening tool built with Streamlit, Groq, and Pydantic. Paste a job description and upload a batch of resumes (PDF or DOCX) - the app extracts structured data from both, scores every candidate against the role's requirements, and returns a ranked shortlist with matching and missing skills called out per candidate.
 
 ---
 
@@ -97,7 +97,7 @@ Job Description (text)              Resumes (PDF / DOCX)
 | Component | Technology |
 |---|---|
 | Frontend | Streamlit |
-| LLM | Groq — `openai/gpt-oss-120b` |
+| LLM | Groq - `openai/gpt-oss-120b` |
 | Schema Validation | Pydantic |
 | PDF Parsing | pypdf |
 | DOCX Parsing | python-docx |
