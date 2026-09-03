@@ -1,8 +1,5 @@
 """Data models shared across the resume screener."""
-
 from pydantic import BaseModel, Field
-
-
 class JobDescription(BaseModel):
     role: str
     required_skills: list[str] = Field(default_factory=list)
@@ -10,16 +7,12 @@ class JobDescription(BaseModel):
     minimum_experience: float | None = None
     education_requirements: list[str] = Field(default_factory=list)
     responsibilities: list[str] = Field(default_factory=list)
-
-
 class Experience(BaseModel):
     company: str | None = None
     role: str | None = None
     duration: str | None = None
     description: str | None = None
     skills_used: list[str] = Field(default_factory=list)
-
-
 class Resume(BaseModel):
     name: str | None = None
     email: str | None = None
@@ -30,8 +23,6 @@ class Resume(BaseModel):
     education: list[str] = Field(default_factory=list)
     projects: list[str] = Field(default_factory=list)
     certifications: list[str] = Field(default_factory=list)
-
-
 class MatchResult(BaseModel):
     candidate_name: str | None = None
     score: float
