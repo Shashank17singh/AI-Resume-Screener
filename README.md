@@ -113,8 +113,8 @@ Job Description (text)              Resumes (PDF / DOCX)
 
 ### 1. Clone the repository
 ```bash
-git clone https://github.com/Shashank17singh/ai-resume-screener.git
-cd ai-resume-screener
+git clone https://github.com/Shashank17singh/AI-Resume-Screener.git
+cd AI-Resume-Screener
 ```
 
 ### 2. Install dependencies
