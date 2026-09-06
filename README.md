@@ -1,6 +1,6 @@
 <div align="center">
 
-# ‍ AI Resume Screener
+# AI Resume Screener
 **An LLM-powered pipeline that parses resumes and job descriptions into structured data - then ranks candidates by fit**
 
 [![Streamlit](https://img.shields.io/badge/Streamlit-UI-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)](https://streamlit.io/)
