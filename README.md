@@ -15,7 +15,7 @@
 
 ##  Overview
 
-Architected and built entirely from scratch, this project extends a script-based resume-scoring exercise into a full Streamlit application using Groq and Pydantic. Paste a job description and upload a batch of resumes (PDF or DOCX) - the app extracts structured data from both, scores every candidate against the role's requirements, and returns a ranked shortlist with matching and missing skills called out per candidate.
+Refactored a script-based resume-scoring exercise into a full Streamlit application using Groq and Pydantic. Paste a job description and upload a batch of resumes (PDF or DOCX) - the app extracts structured data from both, scores every candidate against the role's requirements, and returns a ranked shortlist with matching and missing skills called out per candidate.
 
 ---
 
