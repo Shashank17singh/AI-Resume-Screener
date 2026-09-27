@@ -152,6 +152,12 @@ ai-resume-screener/
 
 ---
 
+##  Deployment
+
+- **Dashboard URL:** https://screen-resumes-ai.streamlit.app/
+
+---
+
 ##  Known Limitations
 
 - Scores are LLM-judged rather than a fixed formula, so they can vary slightly between runs on the same inputs.
