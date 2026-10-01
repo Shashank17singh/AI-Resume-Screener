@@ -1,8 +1,12 @@
 """Turn free-text job descriptions and resumes into structured data via the LLM."""
+
 from llm_client import call_json
 from models import JobDescription, Resume
+
 JOB_SCHEMA = JobDescription.model_json_schema()
 RESUME_SCHEMA = Resume.model_json_schema()
+
+
 def parse_job_description(job_text: str) -> JobDescription:
     """
     Parse free-text job descriptions into structured data via the LLM.
@@ -26,6 +30,8 @@ Rules:
     user_prompt = f"Analyze the following job description:\n\n{job_text}"
     data = call_json(system_prompt, user_prompt)
     return JobDescription(**data)
+
+
 def parse_resume(resume_text: str) -> Resume:
     """
     Parse free-text resumes into structured data via the LLM.

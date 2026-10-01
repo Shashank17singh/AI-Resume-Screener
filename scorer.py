@@ -1,7 +1,11 @@
 """Score a candidate's resume against a job description."""
+
 from llm_client import call_json
 from models import JobDescription, MatchResult, Resume
+
 MATCH_SCHEMA = MatchResult.model_json_schema()
+
+
 def score_candidate(job: JobDescription, resume: Resume) -> MatchResult:
     """
     Score a candidate's resume against a job description via the LLM.
