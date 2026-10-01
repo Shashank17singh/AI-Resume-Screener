@@ -1,9 +1,8 @@
-"""Wraps the Groq client with retry/backoff and a JSON-mode helper.
-The original script fired requests back-to-back with a flat
-`time.sleep(5)` between calls. That's fragile: a single rate-limit
-or transient error kills the whole batch run. This module adds
-exponential backoff and centralizes model/config choices so they
-aren't repeated in every function that calls the LLM.
+"""
+Wraps the Groq client with retry/backoff and a JSON-mode helper.
+
+Provides exponential backoff for resilience against rate limits
+and transient network errors. Centralizes configuration logic.
 """
 import json
 import os
@@ -17,6 +16,17 @@ BASE_DELAY_SECONDS = 2
 class LLMError(RuntimeError):
     """Raised when the LLM call fails after all retries, or returns bad JSON."""
 def _get_client() -> Groq:
+    """
+    Initialize and return a Groq client.
+    
+    Reads the API key from environment variables or Streamlit secrets.
+    
+    Returns:
+        Groq: An authenticated Groq client instance.
+        
+    Raises:
+        LLMError: If GROQ_API_KEY is not found.
+    """
     api_key = os.getenv("GROQ_API_KEY")
     if not api_key:
         try:
@@ -32,6 +42,12 @@ def _get_client() -> Groq:
     return Groq(api_key=api_key)
 _client: Groq | None = None
 def get_client() -> Groq:
+    """
+    Get the singleton instance of the Groq client.
+    
+    Returns:
+        Groq: The authenticated Groq client.
+    """
     global _client
     if _client is None:
         _client = _get_client()

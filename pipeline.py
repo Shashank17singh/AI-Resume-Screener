@@ -1,15 +1,10 @@
-"""Batch-screen a folder of resumes against a job description.
-Improvements over a naive loop:
-- Per-file try/except so one corrupt/unreadable resume doesn't kill the
-  whole batch - it's reported as a failure and the run continues.
-- In-memory cache (by file hash) for parsed resumes, so re-running the
-  screener against a new/edited job description doesn't re-spend LLM
-  calls re-parsing resumes that haven't changed. The cache is injected
-  by the caller (e.g. Streamlit session state) rather than written to
-  shared disk, so parsed resumes - which contain candidate PII - never
-  persist across users/sessions on a shared server.
-- Returns structured results instead of only printing to console, so
-  the same pipeline can back a CLI, a Streamlit UI, or tests.
+"""
+Batch-screen a folder of resumes against a job description.
+
+Features:
+- Per-file fault tolerance.
+- In-memory cache for parsed resumes.
+- Structured results for diverse frontend integrations.
 """
 import hashlib
 from dataclasses import dataclass, field
@@ -21,20 +16,25 @@ from parsing import parse_resume
 from scorer import score_candidate
 @dataclass
 class CandidateResult:
+    """Result of screening a single candidate."""
     file_name: str
     resume: Resume | None
     match: MatchResult | None
     error: str | None = None
 @dataclass
 class ScreeningRun:
+    """Aggregate results for a batch screening run."""
     results: list[CandidateResult] = field(default_factory=list)
     @property
     def successes(self) -> list[CandidateResult]:
+        """List of successfully screened candidates."""
         return [r for r in self.results if r.error is None]
     @property
     def failures(self) -> list[CandidateResult]:
+        """List of candidates that failed during screening."""
         return [r for r in self.results if r.error is not None]
     def ranked(self) -> list[CandidateResult]:
+        """Return successful candidates sorted by descending match score."""
         return sorted(self.successes, key=lambda r: r.match.score, reverse=True)
 def _file_hash(file_path: Path) -> str:
     return hashlib.sha256(file_path.read_bytes()).hexdigest()[:16]
@@ -51,12 +51,18 @@ def screen_folder(
     cache: dict[str, Resume] | None = None,
     on_progress=None,
 ) -> ScreeningRun:
-    """Parse and score every resume in `resume_folder` against `job`.
-    `cache` is an in-memory dict the caller owns (e.g. Streamlit
-    `session_state`) - resumes are never written to shared disk, so
-    candidate PII doesn't persist beyond the caller's own session.
-    `on_progress(file_name, index, total)` is called before each file is
-    processed, if provided - useful for a progress bar in a UI.
+    """
+    Parse and score every resume in a folder against a job description.
+
+    Args:
+        resume_folder (Path): Directory containing resume files.
+        job (JobDescription): The job description to evaluate against.
+        use_cache (bool): Whether to cache parsed resumes.
+        cache (dict): In-memory cache for parsed resumes.
+        on_progress (callable): Callback function for progress updates.
+
+    Returns:
+        ScreeningRun: Results of the screening process.
     """
     if cache is None:
         cache = {}
