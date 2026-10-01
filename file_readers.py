@@ -1,10 +1,17 @@
 """Extract raw text from resume files (PDF / DOCX)."""
+
 from pathlib import Path
+
 from docx import Document
 from pypdf import PdfReader
+
 SUPPORTED_EXTENSIONS = {".pdf", ".docx"}
+
+
 class UnsupportedFileTypeError(ValueError):
     pass
+
+
 def read_pdf(file_path: Path) -> str:
     """
     Extract text from a PDF file.
@@ -22,6 +29,8 @@ def read_pdf(file_path: Path) -> str:
         if text:
             chunks.append(text)
     return "\n".join(chunks)
+
+
 def read_docx(file_path: Path) -> str:
     """
     Extract text from a DOCX file.
@@ -40,6 +49,8 @@ def read_docx(file_path: Path) -> str:
                 if cell.text.strip():
                     chunks.append(cell.text)
     return "\n".join(chunks)
+
+
 def read_resume(file_path: Path) -> str:
     """
     Extract text from a resume file (PDF or DOCX).
