@@ -1,6 +1,7 @@
 <div align="center">
 
 # AI Resume Screener
+
 **An LLM-powered pipeline that parses resumes and job descriptions into structured data - then ranks candidates by fit**
 
 [![Streamlit](https://img.shields.io/badge/Streamlit-UI-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)](https://streamlit.io/)
@@ -13,15 +14,13 @@
 
 ---
 
-##  Overview
+## Overview
 
 Engineered a robust Streamlit application for automated resume scoring, featuring structured Pydantic schemas, a batch processing pipeline with intelligent caching, and exponential retry-with-backoff for Gemini API resilience. Designed a comprehensive interface that accurately surfaces candidate skill alignments and gaps.
 
 ---
 
-
-
-###  Extraction & Scoring Pipeline
+### Extraction & Scoring Pipeline
 
 ```mermaid
 graph TD
@@ -29,7 +28,7 @@ graph TD
     A[Job Description]
     B[Candidate Resumes PDF/DOCX]
     end
-    
+
     subgraph "Processing Engine"
     B -->|pypdf / python-docx| C(Raw Text Extraction)
     C --> D{Prompt Injection}
@@ -37,39 +36,39 @@ graph TD
     D -->|Strict JSON Schema| E(Groq LLM)
     E -->|Pydantic Validation| F[Structured Candidate Profile]
     end
-    
+
     subgraph "Ranking Logic"
     F --> G(Scoring Algorithm)
     A --> G
     G --> H[Ranked Shortlist with Match Details]
     H --> I[Streamlit Dashboard]
     end
-    
+
     classDef io fill:#f9f0ff,stroke:#8a2be2,stroke-width:2px,color:#000;
     classDef core fill:#e1f5fe,stroke:#0288d1,stroke-width:2px,color:#000;
     classDef logic fill:#e8f5e9,stroke:#388e3c,stroke-width:2px,color:#000;
-    
+
     class A,B,I io;
     class C,F,H core;
     class D,E,G logic;
 ```
 
-##  Features
+## Features
 
-| | |
-|---|---|
-|  **Structured JD Parsing** | Extracts role, required/preferred skills, minimum experience, education, and responsibilities from raw job description text |
-|  **Multi-Resume Upload** | Screen a whole batch of PDF/DOCX resumes in one run |
-|  **Schema-Driven Extraction** | Resumes are parsed into a fixed Pydantic schema regardless of formatting or section headings |
-|  **Groq-Powered LLM** | Fast structured-JSON inference via `openai/gpt-oss-120b` |
-|  **Retry with Backoff** | LLM calls retry with exponential backoff instead of failing the whole batch on one hiccup |
-|  **Resume Caching** | Parsed resumes are cached by file hash, so re-screening against a new JD skips redundant LLM calls |
-|  **Per-File Error Isolation** | A corrupt or scanned resume is reported and skipped, not a batch-ending crash |
-|  **Ranked Shortlist UI** | Clean Streamlit view of candidates sorted by match score, with skill gaps highlighted |
+|                              |                                                                                                                             |
+| ---------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| **Structured JD Parsing**    | Extracts role, required/preferred skills, minimum experience, education, and responsibilities from raw job description text |
+| **Multi-Resume Upload**      | Screen a whole batch of PDF/DOCX resumes in one run                                                                         |
+| **Schema-Driven Extraction** | Resumes are parsed into a fixed Pydantic schema regardless of formatting or section headings                                |
+| **Groq-Powered LLM**         | Fast structured-JSON inference via `openai/gpt-oss-120b`                                                                    |
+| **Retry with Backoff**       | LLM calls retry with exponential backoff instead of failing the whole batch on one hiccup                                   |
+| **Resume Caching**           | Parsed resumes are cached by file hash, so re-screening against a new JD skips redundant LLM calls                          |
+| **Per-File Error Isolation** | A corrupt or scanned resume is reported and skipped, not a batch-ending crash                                               |
+| **Ranked Shortlist UI**      | Clean Streamlit view of candidates sorted by match score, with skill gaps highlighted                                       |
 
 ---
 
-##  Architecture
+## Architecture
 
 ```
 Job Description (text)              Resumes (PDF / DOCX)
@@ -87,56 +86,62 @@ Job Description (text)              Resumes (PDF / DOCX)
         (score, matching/missing skills, verdict)
                          │
                          ▼
-              Ranked Shortlist (Streamlit) 
+              Ranked Shortlist (Streamlit)
 ```
 
 ---
 
-##  Tech Stack
+## Tech Stack
 
-| Component | Technology |
-|---|---|
-| Frontend | Streamlit |
-| LLM | Groq - `openai/gpt-oss-120b` |
-| Schema Validation | Pydantic |
-| PDF Parsing | pypdf |
-| DOCX Parsing | python-docx |
-| Resilience | Custom retry/backoff wrapper + disk cache |
+| Component         | Technology                                |
+| ----------------- | ----------------------------------------- |
+| Frontend          | Streamlit                                 |
+| LLM               | Groq - `openai/gpt-oss-120b`              |
+| Schema Validation | Pydantic                                  |
+| PDF Parsing       | pypdf                                     |
+| DOCX Parsing      | python-docx                               |
+| Resilience        | Custom retry/backoff wrapper + disk cache |
 
 ---
 
-##  Setup and Installation
+## Setup and Installation
 
 ### Prerequisites
+
 - Python 3.11+
 - A [Groq API key](https://console.groq.com/keys)
 
 ### 1. Clone the repository
+
 ```bash
 git clone https://github.com/Shashank17singh/AI-Resume-Screener.git
 cd AI-Resume-Screener
 ```
 
 ### 2. Install dependencies
+
 ```bash
 pip install -e .
 ```
 
 ### 3. Set your Groq API key
+
 ```bash
 cp .env.example .env
 # then edit .env and add: GROQ_API_KEY=your_api_key_here
 ```
 
 ### 4. Run the app
+
 ```bash
 streamlit run app.py
 ```
+
 Open the local URL Streamlit prints in your terminal, paste a job description, upload resumes, and screen candidates.
 
 ---
 
-##  Project Structure
+## Project Structure
 
 ```
 ai-resume-screener/
@@ -152,29 +157,28 @@ ai-resume-screener/
 
 ---
 
-##  Deployment
+## Deployment
 
 - **Dashboard URL:** https://screen-resumes-ai.streamlit.app/
 
 ---
 
-##  Known Limitations
+## Known Limitations
 
 - Scores are LLM-judged rather than a fixed formula, so they can vary slightly between runs on the same inputs.
 - Scanned/image-only PDFs with no extractable text are skipped (reported as a failure, not silently dropped).
 
-
---- 
+---
 
 ## Deep Codebase Analysis
 
-| File | Purpose / Details |
-|---|---|
-| `app.py` | Streamlit front-end for the AI resume screener. |
-| `file_readers.py` | Extract raw text from resume files (PDF / DOCX). |
-| `llm_client.py` | Wraps the Groq client with retry/backoff and a JSON-mode helper. |
-| `models.py` | Data models shared across the resume screener. |
-| `parsing.py` | Turn free-text job descriptions and resumes into structured data via the LLM. |
-| `pipeline.py` | Batch-screen a folder of resumes against a job description. |
-| `requirements.txt` | Core component logic and implementation details. |
-| `scorer.py` | Score a candidate's resume against a job description. |
+| File               | Purpose / Details                                                             |
+| ------------------ | ----------------------------------------------------------------------------- |
+| `app.py`           | Streamlit front-end for the AI resume screener.                               |
+| `file_readers.py`  | Extract raw text from resume files (PDF / DOCX).                              |
+| `llm_client.py`    | Wraps the Groq client with retry/backoff and a JSON-mode helper.              |
+| `models.py`        | Data models shared across the resume screener.                                |
+| `parsing.py`       | Turn free-text job descriptions and resumes into structured data via the LLM. |
+| `pipeline.py`      | Batch-screen a folder of resumes against a job description.                   |
+| `requirements.txt` | Core component logic and implementation details.                              |
+| `scorer.py`        | Score a candidate's resume against a job description.                         |

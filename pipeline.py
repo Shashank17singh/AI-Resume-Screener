@@ -6,44 +6,63 @@ Features:
 - In-memory cache for parsed resumes.
 - Structured results for diverse frontend integrations.
 """
+
 import hashlib
 from dataclasses import dataclass, field
 from pathlib import Path
+
 from file_readers import SUPPORTED_EXTENSIONS, read_resume
 from llm_client import LLMError
 from models import JobDescription, MatchResult, Resume
 from parsing import parse_resume
 from scorer import score_candidate
+
+
 @dataclass
 class CandidateResult:
     """Result of screening a single candidate."""
+
     file_name: str
     resume: Resume | None
     match: MatchResult | None
     error: str | None = None
+
+
 @dataclass
 class ScreeningRun:
     """Aggregate results for a batch screening run."""
+
     results: list[CandidateResult] = field(default_factory=list)
+
     @property
     def successes(self) -> list[CandidateResult]:
         """List of successfully screened candidates."""
         return [r for r in self.results if r.error is None]
+
     @property
     def failures(self) -> list[CandidateResult]:
         """List of candidates that failed during screening."""
         return [r for r in self.results if r.error is not None]
+
     def ranked(self) -> list[CandidateResult]:
         """Return successful candidates sorted by descending match score."""
         return sorted(self.successes, key=lambda r: r.match.score, reverse=True)
+
+
 def _file_hash(file_path: Path) -> str:
     return hashlib.sha256(file_path.read_bytes()).hexdigest()[:16]
+
+
 def _cached_resume(cache: dict[str, Resume], file_path: Path) -> Resume | None:
     return cache.get(_file_hash(file_path))
+
+
 def _store_resume_cache(
     cache: dict[str, Resume], file_path: Path, resume: Resume
 ) -> None:
     cache[_file_hash(file_path)] = resume
+
+
 def screen_folder(
     resume_folder: Path,
     job: JobDescription,

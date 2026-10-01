@@ -1,12 +1,16 @@
 """Streamlit front-end for the AI resume screener.
 Run with: streamlit run app.py
 """
+
 import tempfile
 from pathlib import Path
+
 import streamlit as st
+
 from llm_client import LLMError
 from parsing import parse_job_description
 from pipeline import screen_folder
+
 st.set_page_config(page_title="AI Resume Screener", layout="wide")
 
 CUSTOM_CSS = """
@@ -128,10 +132,12 @@ if run_button:
         for uploaded in uploaded_files:
             (tmp_path / uploaded.name).write_bytes(uploaded.getvalue())
         progress_bar = st.progress(0.0, text="Starting...")
+
         def on_progress(file_name: str, index: int, total: int) -> None:
             progress_bar.progress(
                 index / total, text=f"Processing {file_name} ({index}/{total})"
             )
+
         run = screen_folder(
             tmp_path,
             job,
