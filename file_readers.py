@@ -15,12 +15,6 @@ class UnsupportedFileTypeError(ValueError):
 def read_pdf(file_path: Path) -> str:
     """
     Extract text from a PDF file.
-
-    Args:
-        file_path (Path): The path to the PDF file.
-
-    Returns:
-        str: The extracted text from the PDF.
     """
     reader = PdfReader(file_path)
     chunks = []
@@ -34,12 +28,6 @@ def read_pdf(file_path: Path) -> str:
 def read_docx(file_path: Path) -> str:
     """
     Extract text from a DOCX file.
-
-    Args:
-        file_path (Path): The path to the DOCX file.
-
-    Returns:
-        str: The extracted text from the DOCX file.
     """
     document = Document(file_path)
     chunks = [p.text for p in document.paragraphs if p.text.strip()]
@@ -54,15 +42,6 @@ def read_docx(file_path: Path) -> str:
 def read_resume(file_path: Path) -> str:
     """
     Extract text from a resume file (PDF or DOCX).
-
-    Args:
-        file_path (Path): The path to the resume file.
-
-    Returns:
-        str: The extracted text from the resume.
-
-    Raises:
-        UnsupportedFileTypeError: If the file type is not supported.
     """
     suffix = file_path.suffix.lower()
     if suffix == ".pdf":

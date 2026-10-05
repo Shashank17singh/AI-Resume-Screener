@@ -10,12 +10,6 @@ RESUME_SCHEMA = Resume.model_json_schema()
 def parse_job_description(job_text: str) -> JobDescription:
     """
     Parse free-text job descriptions into structured data via the LLM.
-
-    Args:
-        job_text (str): The raw text of the job description.
-
-    Returns:
-        JobDescription: The structured job description data.
     """
     system_prompt = f"""You are an expert HR assistant. Analyze job descriptions
 and extract structured information from them.
@@ -35,12 +29,6 @@ Rules:
 def parse_resume(resume_text: str) -> Resume:
     """
     Parse free-text resumes into structured data via the LLM.
-
-    Args:
-        resume_text (str): The raw text of the resume.
-
-    Returns:
-        Resume: The structured resume data.
     """
     system_prompt = f"""You are an expert AI resume screener. Extract information
 from the resume based on its meaning, not only exact section headings.

@@ -1134,24 +1134,6 @@ def generate_design_system(
 ) -> dict:
     """
     Main entry point for design system generation.
-
-    Args:
-        query: Search query (e.g., "SaaS dashboard", "e-commerce luxury")
-        project_name: Optional project name for output header
-        output_format: "ascii" (default) or "markdown"
-        persist: If True, save design system to design-system/ folder
-        page: Optional page name for page-specific override file
-        output_dir: Optional output directory (defaults to current working directory)
-        variance: Optional 1-10 DESIGN_VARIANCE dial (1=centered/minimal, 10=bold/asymmetric)
-        motion: Optional 1-10 MOTION_INTENSITY dial, pulls a matching GSAP snippet from motion.csv
-        density: Optional 1-10 VISUAL_DENSITY dial, overrides the spacing scale (1=spacious, 10=dense)
-        force: If True, overwrite an existing MASTER.md; otherwise persistence
-               is skipped (with a status message) when one already exists
-
-    Returns:
-        dict with keys: "text" (formatted design system string), "design_system"
-        (raw dict, useful for --json callers), and "persistence" (result of
-        persist_design_system(), or None if persist=False)
     """
     generator = DesignSystemGenerator()
     design_system = generator.generate(
@@ -1226,19 +1208,6 @@ def persist_design_system(
 ) -> dict:
     """
     Persist design system to design-system/<project>/ folder using Master + Overrides pattern.
-
-    Args:
-        design_system: The generated design system dictionary
-        page: Optional page name for page-specific override file
-        output_dir: Optional output directory (defaults to current working directory)
-        page_query: Optional query string for intelligent page override generation
-        force: If True, overwrite an existing MASTER.md. If False (default) and
-               MASTER.md already exists, persistence is skipped so prior design
-               decisions aren't silently discarded.
-
-    Returns:
-        dict with created file paths and status. status is "skipped_exists" if
-        MASTER.md already existed and force was not set.
     """
     base_dir = Path(output_dir) if output_dir else Path.cwd()
 

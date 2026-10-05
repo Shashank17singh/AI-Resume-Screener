@@ -96,14 +96,6 @@ def build_cip_prompt(
     use_logo_image=False,
 ):
     """Build an optimized prompt for CIP mockup generation
-
-    Args:
-        deliverable: Type of deliverable (business card, letterhead, etc.)
-        brand_name: Name of the brand
-        style: Design style preference
-        industry: Industry for style recommendations
-        mockup: Mockup context override
-        use_logo_image: If True, prompt is optimized for image editing with logo
     """
 
     # Get deliverable details
@@ -213,13 +205,6 @@ def generate_with_nano_banana(
     Models:
     - flash: gemini-2.5-flash-image (fast, cost-effective) - DEFAULT
     - pro: gemini-3-pro-image-preview (quality, 4K text rendering)
-
-    Args:
-        prompt_data: Dict with prompt, deliverable, brand, etc.
-        output_dir: Output directory for generated images
-        model_key: 'flash' or 'pro'
-        aspect_ratio: Output aspect ratio (1:1, 16:9, etc.)
-        logo_image: PIL.Image object of the brand logo for image editing mode
     """
     try:
         from google import genai
@@ -316,16 +301,6 @@ def generate_cip_set(
     aspect_ratio="1:1",
 ):
     """Generate a complete CIP set for a brand
-
-    Args:
-        brand_name: Brand name to generate for
-        industry: Industry type for style recommendations
-        style: Optional specific style override
-        deliverables: List of deliverables to generate (default: core set)
-        output_dir: Output directory for images
-        model_key: 'flash' (fast) or 'pro' (quality)
-        logo_path: Path to brand logo image for image editing mode
-        aspect_ratio: Output aspect ratio
     """
 
     # Load logo image if provided
@@ -379,9 +354,6 @@ def generate_cip_set(
 
 def check_logo_required(brand_name, skip_prompt=False):
     """Check if logo is required and suggest logo-design skill if not provided
-
-    Returns:
-        str: 'continue' to proceed without logo, 'generate' to use logo-design skill, 'exit' to abort
     """
     if skip_prompt:
         return "continue"

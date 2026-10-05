@@ -27,12 +27,6 @@ def _get_client() -> Groq:
     Initialize and return a Groq client.
 
     Reads the API key from environment variables or Streamlit secrets.
-
-    Returns:
-        Groq: An authenticated Groq client instance.
-
-    Raises:
-        LLMError: If GROQ_API_KEY is not found.
     """
     api_key = os.getenv("GROQ_API_KEY")
     if not api_key:
@@ -56,9 +50,6 @@ _client: Groq | None = None
 def get_client() -> Groq:
     """
     Get the singleton instance of the Groq client.
-
-    Returns:
-        Groq: The authenticated Groq client.
     """
     global _client
     if _client is None:

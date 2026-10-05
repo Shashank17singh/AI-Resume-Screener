@@ -180,5 +180,5 @@ ai-resume-screener/
 | `models.py`        | Data models shared across the resume screener.                                |
 | `parsing.py`       | Turn free-text job descriptions and resumes into structured data via the LLM. |
 | `pipeline.py`      | Batch-screen a folder of resumes against a job description.                   |
-| `requirements.txt` | Core component logic and implementation details.                              |
+| `requirements.txt` | Project dependencies.                                                         |
 | `scorer.py`        | Score a candidate's resume against a job description.                         |
