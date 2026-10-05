@@ -16,7 +16,7 @@
 
 ## Overview
 
-Engineered a robust Streamlit application for automated resume scoring, featuring structured Pydantic schemas, a batch processing pipeline with intelligent caching, and exponential retry-with-backoff for Gemini API resilience. Designed a comprehensive interface that accurately surfaces candidate skill alignments and gaps.
+An automated resume scoring tool that surfaces candidate skill alignments and gaps. It processes resumes in batches with caching and resilient API calls to Gemini, presenting the results through a Streamlit interface.
 
 ---
 
