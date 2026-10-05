@@ -19,10 +19,6 @@ class ShadcnInstaller:
     def __init__(self, project_root: Path | None = None, dry_run: bool = False):
         """
         Initialize installer.
-
-        Args:
-            project_root: Project root directory (default: current directory)
-            dry_run: If True, show actions without executing
         """
         self.project_root = project_root or Path.cwd()
         self.dry_run = dry_run
@@ -31,18 +27,12 @@ class ShadcnInstaller:
     def check_shadcn_config(self) -> bool:
         """
         Check if shadcn is initialized in project.
-
-        Returns:
-            True if components.json exists
         """
         return self.components_json.exists()
 
     def get_installed_components(self) -> list[str]:
         """
         Get list of already installed components.
-
-        Returns:
-            List of installed component names
         """
         if not self.check_shadcn_config():
             return []
@@ -82,13 +72,6 @@ class ShadcnInstaller:
     ) -> tuple[bool, str]:
         """
         Add shadcn/ui components.
-
-        Args:
-            components: List of component names to add
-            overwrite: If True, overwrite existing components
-
-        Returns:
-            Tuple of (success, message)
         """
         if not components:
             return False, "No components specified"
@@ -145,12 +128,6 @@ class ShadcnInstaller:
     def add_all_components(self, overwrite: bool = False) -> tuple[bool, str]:
         """
         Add all available shadcn/ui components.
-
-        Args:
-            overwrite: If True, overwrite existing components
-
-        Returns:
-            Tuple of (success, message)
         """
         if not self.check_shadcn_config():
             return (
@@ -193,9 +170,6 @@ class ShadcnInstaller:
     def list_installed(self) -> tuple[bool, str]:
         """
         List installed components.
-
-        Returns:
-            Tuple of (success, message with component list)
         """
         if not self.check_shadcn_config():
             return False, "shadcn not initialized"

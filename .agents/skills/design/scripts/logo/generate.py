@@ -144,10 +144,6 @@ def generate_logo(
     aspect_ratio=None,
 ):
     """Generate a logo using Gemini models with image generation
-
-    Args:
-        aspect_ratio: Image aspect ratio. Options: "1:1", "16:9", "9:16", "4:3", "3:4"
-                      Default is "1:1" (square) for logos.
     """
 
     if not GEMINI_API_KEY:

@@ -72,16 +72,6 @@ def screen_folder(
 ) -> ScreeningRun:
     """
     Parse and score every resume in a folder against a job description.
-
-    Args:
-        resume_folder (Path): Directory containing resume files.
-        job (JobDescription): The job description to evaluate against.
-        use_cache (bool): Whether to cache parsed resumes.
-        cache (dict): In-memory cache for parsed resumes.
-        on_progress (callable): Callback function for progress updates.
-
-    Returns:
-        ScreeningRun: Results of the screening process.
     """
     if cache is None:
         cache = {}

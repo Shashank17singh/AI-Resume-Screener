@@ -461,15 +461,6 @@ def calculate_pattern_break(slide_index, total_slides, previous_emotion=None):
 def search_with_context(query, slide_position=1, total_slides=9, previous_emotion=None):
     """
     Enhanced search that considers deck context.
-
-    Args:
-        query: Search query
-        slide_position: Current slide index (1-based)
-        total_slides: Total slides in deck
-        previous_emotion: Emotion of previous slide (for contrast)
-
-    Returns:
-        Search results enriched with contextual recommendations
     """
     # Get base results from existing BM25 search
     base_results = search_all(query, max_results=2)

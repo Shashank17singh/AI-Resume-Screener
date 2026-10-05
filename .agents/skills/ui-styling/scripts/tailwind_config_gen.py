@@ -32,11 +32,6 @@ class TailwindConfigGenerator:
     ):
         """
         Initialize generator.
-
-        Args:
-            typescript: If True, generate .ts config, else .js
-            framework: Framework name (react, vue, svelte, nextjs)
-            output_path: Output file path (default: auto-detect)
         """
         self.typescript = typescript
         self.framework = framework
@@ -83,10 +78,6 @@ class TailwindConfigGenerator:
     def add_colors(self, colors: dict[str, str]) -> None:
         """
         Add custom colors to theme.
-
-        Args:
-            colors: Dict of color_name: color_value
-                   Value can be hex (#3b82f6) or variable (hsl(var(--primary)))
         """
         if "colors" not in self.config["theme"]["extend"]:
             self.config["theme"]["extend"]["colors"] = {}
@@ -96,10 +87,6 @@ class TailwindConfigGenerator:
     def add_color_palette(self, name: str, base_color: str) -> None:
         """
         Add full color palette (50-950 shades) for a base color.
-
-        Args:
-            name: Color name (e.g., 'brand', 'primary')
-            base_color: Base color in oklch format or hex
         """
         # For simplicity, use CSS variable approach
         if "colors" not in self.config["theme"]["extend"]:
@@ -122,10 +109,6 @@ class TailwindConfigGenerator:
     def add_fonts(self, fonts: dict[str, list[str]]) -> None:
         """
         Add custom font families.
-
-        Args:
-            fonts: Dict of font_type: [font_names]
-                   e.g., {'sans': ['Inter', 'system-ui', 'sans-serif']}
         """
         if "fontFamily" not in self.config["theme"]["extend"]:
             self.config["theme"]["extend"]["fontFamily"] = {}
@@ -135,10 +118,6 @@ class TailwindConfigGenerator:
     def add_spacing(self, spacing: dict[str, str]) -> None:
         """
         Add custom spacing values.
-
-        Args:
-            spacing: Dict of name: value
-                     e.g., {'18': '4.5rem', 'navbar': '4rem'}
         """
         if "spacing" not in self.config["theme"]["extend"]:
             self.config["theme"]["extend"]["spacing"] = {}
@@ -148,10 +127,6 @@ class TailwindConfigGenerator:
     def add_breakpoints(self, breakpoints: dict[str, str]) -> None:
         """
         Add custom breakpoints.
-
-        Args:
-            breakpoints: Dict of name: width
-                        e.g., {'3xl': '1920px', 'tablet': '768px'}
         """
         if "screens" not in self.config["theme"]["extend"]:
             self.config["theme"]["extend"]["screens"] = {}
@@ -161,10 +136,6 @@ class TailwindConfigGenerator:
     def add_plugins(self, plugins: list[str]) -> None:
         """
         Add plugin requirements.
-
-        Args:
-            plugins: List of plugin names
-                    e.g., ['@tailwindcss/typography', '@tailwindcss/forms']
         """
         for plugin in plugins:
             if plugin not in self.config["plugins"]:
@@ -173,9 +144,6 @@ class TailwindConfigGenerator:
     def recommend_plugins(self) -> list[str]:
         """
         Get plugin recommendations based on configuration.
-
-        Returns:
-            List of recommended plugin package names
         """
         recommendations = []
 
@@ -191,9 +159,6 @@ class TailwindConfigGenerator:
     def generate_config_string(self) -> str:
         """
         Generate configuration file content.
-
-        Returns:
-            Configuration file as string
         """
         if self.typescript:
             return self._generate_typescript()
@@ -267,9 +232,6 @@ module.exports = {{
     def write_config(self) -> tuple[bool, str]:
         """
         Write configuration to file.
-
-        Returns:
-            Tuple of (success, message)
         """
         try:
             config_content = self.generate_config_string()
@@ -284,9 +246,6 @@ module.exports = {{
     def validate_config(self) -> tuple[bool, str]:
         """
         Validate configuration.
-
-        Returns:
-            Tuple of (valid, message)
         """
         # Check content paths exist
         if not self.config["content"]:
