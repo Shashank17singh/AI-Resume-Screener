@@ -1,10 +1,7 @@
 """
-Wraps the Groq client with retry/backoff and a JSON-mode helper.
-
-Provides exponential backoff for resilience against rate limits
-and transient network errors. Centralizes configuration logic.
+Thin wrapper over the Groq SDK with basic exponential backoff retries.
+Handles API key resolution natively (Streamlit secrets vs .env).
 """
-
 import json
 import os
 import time
@@ -19,15 +16,10 @@ BASE_DELAY_SECONDS = 2
 
 
 class LLMError(RuntimeError):
-    """Raised when the LLM call fails after all retries, or returns bad JSON."""
+    pass
 
 
 def _get_client() -> Groq:
-    """
-    Initialize and return a Groq client.
-
-    Reads the API key from environment variables or Streamlit secrets.
-    """
     api_key = os.getenv("GROQ_API_KEY")
     if not api_key:
         try:
@@ -48,9 +40,6 @@ _client: Groq | None = None
 
 
 def get_client() -> Groq:
-    """
-    Get the singleton instance of the Groq client.
-    """
     global _client
     if _client is None:
         _client = _get_client()
@@ -58,10 +47,6 @@ def get_client() -> Groq:
 
 
 def call_json(system_prompt: str, user_prompt: str, model: str = DEFAULT_MODEL) -> dict:
-    """Call the chat completion endpoint in JSON mode and return parsed JSON.
-    Retries on transient failures (rate limits, network errors, malformed
-    JSON) with exponential backoff instead of crashing the whole batch.
-    """
     client = get_client()
     messages = [
         {"role": "system", "content": system_prompt},

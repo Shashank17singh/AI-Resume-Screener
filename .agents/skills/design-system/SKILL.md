@@ -173,7 +173,7 @@ python scripts/search-slides.py "cta" --context --position 9 --prev-emotion frus
 Premium decks alternate between emotions for engagement:
 
 ```
-"What Is" (frustration) ↔ "What Could Be" (hope)
+"What Is" (frustration)  "What Could Be" (hope)
 ```
 
 System calculates pattern breaks at 1/3 and 2/3 positions.

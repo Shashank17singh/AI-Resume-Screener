@@ -1,5 +1,6 @@
-"""Turn free-text job descriptions and resumes into structured data via the LLM."""
-
+"""
+Handles LLM prompt injection and JSON schema validation for parsing resumes and JDs.
+"""
 from llm_client import call_json
 from models import JobDescription, Resume
 
@@ -8,9 +9,6 @@ RESUME_SCHEMA = Resume.model_json_schema()
 
 
 def parse_job_description(job_text: str) -> JobDescription:
-    """
-    Parse free-text job descriptions into structured data via the LLM.
-    """
     system_prompt = f"""You are an expert HR assistant. Analyze job descriptions
 and extract structured information from them.
 Return ONLY valid JSON matching this schema:
@@ -27,9 +25,6 @@ Rules:
 
 
 def parse_resume(resume_text: str) -> Resume:
-    """
-    Parse free-text resumes into structured data via the LLM.
-    """
     system_prompt = f"""You are an expert AI resume screener. Extract information
 from the resume based on its meaning, not only exact section headings.
 Different resumes use different headings (Experience, Professional

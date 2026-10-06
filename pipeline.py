@@ -1,12 +1,7 @@
 """
-Batch-screen a folder of resumes against a job description.
-
-Features:
-- Per-file fault tolerance.
-- In-memory cache for parsed resumes.
-- Structured results for diverse frontend integrations.
+Coordinates the end-to-end resume screening pipeline:
+File reading -> Parsing -> Scoring -> Ranking.
 """
-
 import hashlib
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -20,8 +15,6 @@ from scorer import score_candidate
 
 @dataclass
 class CandidateResult:
-    """Result of screening a single candidate."""
-
     file_name: str
     resume: Resume | None
     match: MatchResult | None
@@ -30,22 +23,17 @@ class CandidateResult:
 
 @dataclass
 class ScreeningRun:
-    """Aggregate results for a batch screening run."""
-
     results: list[CandidateResult] = field(default_factory=list)
 
     @property
     def successes(self) -> list[CandidateResult]:
-        """List of successfully screened candidates."""
         return [r for r in self.results if r.error is None]
 
     @property
     def failures(self) -> list[CandidateResult]:
-        """List of candidates that failed during screening."""
         return [r for r in self.results if r.error is not None]
 
     def ranked(self) -> list[CandidateResult]:
-        """Return successful candidates sorted by descending match score."""
         return sorted(self.successes, key=lambda r: r.match.score, reverse=True)
 
 
@@ -70,9 +58,6 @@ def screen_folder(
     cache: dict[str, Resume] | None = None,
     on_progress=None,
 ) -> ScreeningRun:
-    """
-    Parse and score every resume in a folder against a job description.
-    """
     if cache is None:
         cache = {}
     files = sorted(
