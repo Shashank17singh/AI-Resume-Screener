@@ -36,25 +36,25 @@ def format_brief(brief):
     output.append(f"{'=' * 60}")
 
     if brief.get("industry"):
-        output.append(f"\n📊 INDUSTRY: {brief['industry'].get('Industry', 'N/A')}")
+        output.append(f"\n INDUSTRY: {brief['industry'].get('Industry', 'N/A')}")
         output.append(f"   Style: {brief['industry'].get('CIP Style', 'N/A')}")
         output.append(f"   Mood: {brief['industry'].get('Mood', 'N/A')}")
 
     if brief.get("style"):
-        output.append(f"\n🎨 DESIGN STYLE: {brief['style'].get('Style Name', 'N/A')}")
+        output.append(f"\n DESIGN STYLE: {brief['style'].get('Style Name', 'N/A')}")
         output.append(f"   Description: {brief['style'].get('Description', 'N/A')}")
         output.append(f"   Materials: {brief['style'].get('Materials', 'N/A')}")
         output.append(f"   Finishes: {brief['style'].get('Finishes', 'N/A')}")
 
     if brief.get("color_system"):
-        output.append("\n🎯 COLOR SYSTEM:")
+        output.append("\n COLOR SYSTEM:")
         output.append(f"   Primary: {brief['color_system'].get('primary', 'N/A')}")
         output.append(f"   Secondary: {brief['color_system'].get('secondary', 'N/A')}")
 
-    output.append(f"\n✏️ TYPOGRAPHY: {brief.get('typography', 'N/A')}")
+    output.append(f"\n TYPOGRAPHY: {brief.get('typography', 'N/A')}")
 
     if brief.get("recommended_deliverables"):
-        output.append("\n📦 RECOMMENDED DELIVERABLES:")
+        output.append("\n RECOMMENDED DELIVERABLES:")
         for d in brief["recommended_deliverables"]:
             output.append(
                 f"   • {d.get('Deliverable', 'N/A')}: {d.get('Description', '')[:60]}..."

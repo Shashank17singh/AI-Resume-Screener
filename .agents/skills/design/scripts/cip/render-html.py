@@ -390,7 +390,7 @@ def generate_html(brand_name, industry, images_dir, output_path=None, style=None
     with open(output_path, "w", encoding="utf-8") as f:
         f.write(html_content)
 
-    print(f"✅ HTML presentation generated: {output_path}")
+    print(f" HTML presentation generated: {output_path}")
     return str(output_path)
 
 

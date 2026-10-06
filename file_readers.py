@@ -1,5 +1,7 @@
-"""Extract raw text from resume files (PDF / DOCX)."""
-
+"""
+Handles extraction of raw text from PDF and DOCX files.
+Designed to silently drop empty blocks and tables to simplify parsing downstream.
+"""
 from pathlib import Path
 
 from docx import Document
@@ -13,9 +15,6 @@ class UnsupportedFileTypeError(ValueError):
 
 
 def read_pdf(file_path: Path) -> str:
-    """
-    Extract text from a PDF file.
-    """
     reader = PdfReader(file_path)
     chunks = []
     for page in reader.pages:
@@ -26,9 +25,6 @@ def read_pdf(file_path: Path) -> str:
 
 
 def read_docx(file_path: Path) -> str:
-    """
-    Extract text from a DOCX file.
-    """
     document = Document(file_path)
     chunks = [p.text for p in document.paragraphs if p.text.strip()]
     for table in document.tables:
@@ -40,9 +36,6 @@ def read_docx(file_path: Path) -> str:
 
 
 def read_resume(file_path: Path) -> str:
-    """
-    Extract text from a resume file (PDF or DOCX).
-    """
     suffix = file_path.suffix.lower()
     if suffix == ".pdf":
         return read_pdf(file_path)

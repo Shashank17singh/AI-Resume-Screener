@@ -227,7 +227,7 @@ def generate_with_nano_banana(
     # Determine mode
     mode = "image-editing" if logo_image else "text-to-image"
 
-    print("\n🎨 Generating CIP mockup...")
+    print("\n Generating CIP mockup...")
     print(f"   Mode: {mode}")
     print(f"   Deliverable: {prompt_data['deliverable']}")
     print(f"   Brand: {prompt_data['brand']}")
@@ -279,7 +279,7 @@ def generate_with_nano_banana(
                     with open(filepath, "wb") as f:
                         f.write(image_data)
 
-                    print(f"\n✅ Generated: {filepath}")
+                    print(f"\n Generated: {filepath}")
                     return str(filepath)
 
         print("No image generated in response")
@@ -358,7 +358,7 @@ def check_logo_required(brand_name, skip_prompt=False):
     if skip_prompt:
         return "continue"
 
-    print(f"\n⚠️  No logo image provided for '{brand_name}'")
+    print(f"\n  No logo image provided for '{brand_name}'")
     print(
         "   Without a logo, AI will generate its own interpretation of the brand logo."
     )
@@ -454,7 +454,7 @@ Image Editing Mode:
         # No logo provided - ask user what to do
         action = check_logo_required(args.brand, skip_prompt=args.no_logo_prompt)
         if action == "generate":
-            print("\n💡 To generate a logo, use the logo-design skill:")
+            print("\n To generate a logo, use the logo-design skill:")
             print(
                 f'   python ~/.claude/skills/design/scripts/logo/generate.py --brand "{args.brand}" --industry "{args.industry}"'
             )
@@ -509,7 +509,7 @@ Image Editing Mode:
             if args.json:
                 print(json.dumps(results, indent=2))
             else:
-                print(f"\n✅ Generated {len(results)} CIP mockups")
+                print(f"\n Generated {len(results)} CIP mockups")
     else:
         # Generate single deliverable
         deliverable = args.deliverable or "business card"

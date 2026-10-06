@@ -1093,9 +1093,9 @@ def format_markdown(design_system: dict) -> str:
         motion_do = motion_snippet.get("Do", "")
         motion_dont = motion_snippet.get("Don't", "")
         if motion_do:
-            lines.append(f"- ✅ {motion_do}")
+            lines.append(f"-  {motion_do}")
         if motion_dont:
-            lines.append(f"- ❌ {motion_dont}")
+            lines.append(f"-  {motion_dont}")
         lines.append("")
 
     # Anti-patterns section
@@ -1554,11 +1554,11 @@ def format_master_md(design_system: dict) -> str:
         motion_do = motion_snippet.get("Do", "")
         motion_dont = motion_snippet.get("Don't", "")
         if motion_do:
-            lines.append(f"- ✅ {motion_do}")
+            lines.append(f"-  {motion_do}")
         if motion_dont:
-            lines.append(f"- ❌ {motion_dont}")
+            lines.append(f"-  {motion_dont}")
         if motion_snippet.get("Performance Notes"):
-            lines.append(f"- ⚡ {motion_snippet.get('Performance Notes', '')}")
+            lines.append(f"-  {motion_snippet.get('Performance Notes', '')}")
         lines.append("")
 
     # Anti-Patterns section
@@ -1570,23 +1570,23 @@ def format_master_md(design_system: dict) -> str:
         anti_list = [a.strip() for a in anti_patterns.split("+")]
         for anti in anti_list:
             if anti:
-                lines.append(f"- ❌ {anti}")
+                lines.append(f"-  {anti}")
     lines.append("")
     lines.append("### Additional Forbidden Patterns")
     lines.append("")
     lines.append(
-        "- ❌ **Emojis as icons** — Use SVG icons (Heroicons, Lucide, Simple Icons)"
+        "-  **Emojis as icons** — Use SVG icons (Heroicons, Lucide, Simple Icons)"
     )
     lines.append(
-        "- ❌ **Missing cursor:pointer** — All clickable elements must have cursor:pointer"
+        "-  **Missing cursor:pointer** — All clickable elements must have cursor:pointer"
     )
     lines.append(
-        "- ❌ **Layout-shifting hovers** — Avoid scale transforms that shift layout"
+        "-  **Layout-shifting hovers** — Avoid scale transforms that shift layout"
     )
-    lines.append("- ❌ **Low contrast text** — Maintain 4.5:1 minimum contrast ratio")
-    lines.append("- ❌ **Instant state changes** — Always use transitions (150-300ms)")
+    lines.append("-  **Low contrast text** — Maintain 4.5:1 minimum contrast ratio")
+    lines.append("-  **Instant state changes** — Always use transitions (150-300ms)")
     lines.append(
-        "- ❌ **Invisible focus states** — Focus states must be visible for a11y"
+        "-  **Invisible focus states** — Focus states must be visible for a11y"
     )
     lines.append("")
 
@@ -1634,7 +1634,7 @@ def format_page_override_md(
     lines.append(f"> **Page Type:** {page_overrides.get('page_type', 'General')}")
     lines.append("")
     lines.append(
-        "> ⚠️ **IMPORTANT:** Rules in this file **override** the Master file (`design-system/MASTER.md`)."
+        ">  **IMPORTANT:** Rules in this file **override** the Master file (`design-system/MASTER.md`)."
     )
     lines.append(
         "> Only deviations from the Master are documented here. For all other rules, refer to the Master."

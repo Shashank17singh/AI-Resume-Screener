@@ -170,15 +170,4 @@ ai-resume-screener/
 
 ---
 
-## Deep Codebase Analysis
 
-| File               | Purpose / Details                                                             |
-| ------------------ | ----------------------------------------------------------------------------- |
-| `app.py`           | Streamlit front-end for the AI resume screener.                               |
-| `file_readers.py`  | Extract raw text from resume files (PDF / DOCX).                              |
-| `llm_client.py`    | Wraps the Groq client with retry/backoff and a JSON-mode helper.              |
-| `models.py`        | Data models shared across the resume screener.                                |
-| `parsing.py`       | Turn free-text job descriptions and resumes into structured data via the LLM. |
-| `pipeline.py`      | Batch-screen a folder of resumes against a job description.                   |
-| `requirements.txt` | Project dependencies.                                                         |
-| `scorer.py`        | Score a candidate's resume against a job description.                         |
