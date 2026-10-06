@@ -102,9 +102,7 @@ def format_context(context):
         output.append(f"   Overlay: {bg.get('overlay_style', 'N/A')}")
         output.append(f"   Keywords: {bg.get('search_keywords', 'N/A')}")
 
-    output.append(
-        f"\n Animation: {context.get('animation_class', 'animate-fade-up')}"
-    )
+    output.append(f"\n Animation: {context.get('animation_class', 'animate-fade-up')}")
 
     return "\n".join(output)
 

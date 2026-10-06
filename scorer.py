@@ -1,6 +1,7 @@
 """
 LLM-based scoring engine comparing candidate profiles against job requirements.
 """
+
 from llm_client import call_json
 from models import JobDescription, MatchResult, Resume
 

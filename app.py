@@ -2,6 +2,7 @@
 Streamlit UI for the AI Resume Screener.
 Orchestrates the resume parsing, LLM scoring, and ranking pipelines.
 """
+
 import tempfile
 from pathlib import Path
 
@@ -23,12 +24,12 @@ if "resume_cache" not in st.session_state:
 with st.sidebar:
     st.header("1. Job description")
     job_text = st.text_area("Paste the job description", height=300)
-    
+
     st.header("2. Resumes")
     uploaded_files = st.file_uploader(
         "Upload PDF or DOCX resumes", type=["pdf", "docx"], accept_multiple_files=True
     )
-    
+
     use_cache = st.checkbox(
         "Cache parsed resumes (skip re-parsing on rerun)", value=True
     )
@@ -41,24 +42,24 @@ if run_button:
     if not uploaded_files:
         st.error("Upload at least one resume.")
         st.stop()
-        
+
     with st.spinner("Reading the job description..."):
         try:
             job = parse_job_description(job_text)
         except LLMError as exc:
             st.error(f"Couldn't parse the job description: {exc}")
             st.stop()
-            
+
     with st.expander("Parsed job requirements", expanded=False):
         st.json(job.model_dump())
-        
-    # Streamlit file uploaders return in-memory buffers; we dump them to disk 
+
+    # Streamlit file uploaders return in-memory buffers; we dump them to disk
     # to feed standard parsing functions uniformly.
     with tempfile.TemporaryDirectory() as tmp_dir:
         tmp_path = Path(tmp_dir)
         for uploaded in uploaded_files:
             (tmp_path / uploaded.name).write_bytes(uploaded.getvalue())
-            
+
         progress_bar = st.progress(0.0, text="Starting...")
 
         def on_progress(file_name: str, index: int, total: int) -> None:
@@ -74,7 +75,7 @@ if run_button:
             on_progress=on_progress,
         )
         progress_bar.empty()
-        
+
     ranked = run.ranked()
     if ranked:
         st.subheader(f"Ranked candidates ({len(ranked)})")
@@ -86,14 +87,14 @@ if run_button:
                     f"**#{rank} - {m.candidate_name or result.file_name}**"
                 )
                 cols[1].metric("Match score", f"{m.score:.0f}%")
-                
+
                 if m.experience_requirement_met is not None:
                     st.caption(
                         "✅ Meets experience requirement"
                         if m.experience_requirement_met
                         else "❌ Does not meet stated experience requirement"
                     )
-                    
+
                 col_a, col_b = st.columns(2)
                 with col_a:
                     st.markdown("**Matching skills**")
@@ -101,9 +102,9 @@ if run_button:
                 with col_b:
                     st.markdown("**Missing skills**")
                     st.write(", ".join(m.missing_skills) or "-")
-                    
+
                 st.markdown(f"_{m.verdict}_")
-                
+
     if run.failures:
         st.subheader(f"Could not process ({len(run.failures)})")
         for result in run.failures:

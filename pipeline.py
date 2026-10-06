@@ -2,6 +2,7 @@
 Coordinates the end-to-end resume screening pipeline:
 File reading -> Parsing -> Scoring -> Ranking.
 """
+
 import hashlib
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -78,6 +79,6 @@ def screen_folder(
                     _store_resume_cache(cache, file_path, resume)
             match = score_candidate(job, resume)
             run.results.append(CandidateResult(file_path.name, resume, match))
-        except (LLMError, ValueError, Exception) as exc:
+        except (LLMError, ValueError, Exception) as exc:  # noqa: BLE001
             run.results.append(CandidateResult(file_path.name, None, None, str(exc)))
     return run

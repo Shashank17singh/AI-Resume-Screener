@@ -60,7 +60,7 @@ def load_logo_image(logo_path):
         elif img.mode != "RGB":
             img = img.convert("RGB")
         return img
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001
         print(f"Error loading logo: {e}")
         return None
 
@@ -95,8 +95,7 @@ def build_cip_prompt(
     mockup=None,
     use_logo_image=False,
 ):
-    """Build an optimized prompt for CIP mockup generation
-    """
+    """Build an optimized prompt for CIP mockup generation"""
 
     # Get deliverable details
     deliverable_info = search(deliverable, "deliverable", 1)
@@ -127,7 +126,7 @@ def build_cip_prompt(
     # Build prompt components
     deliverable_name = deliverable_data.get("Deliverable", deliverable)
     description = deliverable_data.get("Description", "")
-    dimensions = deliverable_data.get("Dimensions", "")
+    deliverable_data.get("Dimensions", "")
     logo_placement = deliverable_data.get("Logo Placement", "center")
 
     style_name = style_data.get("Style Name", style or "corporate")
@@ -267,7 +266,7 @@ def generate_with_nano_banana(
                     output_dir = Path(output_dir)
                     output_dir.mkdir(parents=True, exist_ok=True)
 
-                    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+                    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")  # noqa: DTZ005
                     brand_slug = prompt_data["brand"].lower().replace(" ", "-")
                     deliverable_slug = (
                         prompt_data["deliverable"].lower().replace(" ", "-")
@@ -285,7 +284,7 @@ def generate_with_nano_banana(
         print("No image generated in response")
         return None
 
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001
         print(f"Error generating image: {e}")
         return None
 
@@ -300,8 +299,7 @@ def generate_cip_set(
     logo_path=None,
     aspect_ratio="1:1",
 ):
-    """Generate a complete CIP set for a brand
-    """
+    """Generate a complete CIP set for a brand"""
 
     # Load logo image if provided
     logo_image = None
@@ -353,8 +351,7 @@ def generate_cip_set(
 
 
 def check_logo_required(brand_name, skip_prompt=False):
-    """Check if logo is required and suggest logo-design skill if not provided
-    """
+    """Check if logo is required and suggest logo-design skill if not provided"""
     if skip_prompt:
         return "continue"
 
