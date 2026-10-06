@@ -1,6 +1,7 @@
 """
 Handles LLM prompt injection and JSON schema validation for parsing resumes and JDs.
 """
+
 from llm_client import call_json
 from models import JobDescription, Resume
 

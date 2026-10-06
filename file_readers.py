@@ -2,6 +2,7 @@
 Handles extraction of raw text from PDF and DOCX files.
 Designed to silently drop empty blocks and tables to simplify parsing downstream.
 """
+
 from pathlib import Path
 
 from docx import Document

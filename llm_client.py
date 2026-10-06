@@ -2,6 +2,7 @@
 Thin wrapper over the Groq SDK with basic exponential backoff retries.
 Handles API key resolution natively (Streamlit secrets vs .env).
 """
+
 import json
 import os
 import time
@@ -26,7 +27,7 @@ def _get_client() -> Groq:
             import streamlit as st
 
             api_key = st.secrets.get("GROQ_API_KEY")
-        except Exception:
+        except Exception:  # noqa: BLE001, S110
             pass
     if not api_key:
         raise LLMError(
@@ -64,7 +65,7 @@ def call_json(system_prompt: str, user_prompt: str, model: str = DEFAULT_MODEL) 
             return json.loads(raw)
         except json.JSONDecodeError as exc:
             last_error = exc
-        except Exception as exc:
+        except Exception as exc:  # noqa: BLE001
             last_error = exc
         if attempt < MAX_RETRIES:
             delay = BASE_DELAY_SECONDS * (2 ** (attempt - 1))

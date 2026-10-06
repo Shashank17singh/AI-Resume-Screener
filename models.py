@@ -1,6 +1,7 @@
 """
 Pydantic data models for structured LLM parsing and scoring.
 """
+
 from pydantic import BaseModel, Field
 
 
