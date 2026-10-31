@@ -16,7 +16,7 @@
 
 ## Overview
 
-An automated resume scoring tool that surfaces candidate skill alignments and gaps. It processes resumes in batches with caching and resilient API calls to Gemini, presenting the results through a Streamlit interface.
+An automated resume scoring tool that surfaces candidate skill alignments and gaps. It processes resumes in batches with caching and resilient API calls to Groq, presenting the results through a Streamlit interface.
 
 ---
 
@@ -100,7 +100,7 @@ Job Description (text)              Resumes (PDF / DOCX)
 | Schema Validation | Pydantic                                  |
 | PDF Parsing       | pypdf                                     |
 | DOCX Parsing      | python-docx                               |
-| Resilience        | Custom retry/backoff wrapper + disk cache |
+| Resilience        | Custom retry/backoff wrapper + in-session cache |
 
 ---
 
