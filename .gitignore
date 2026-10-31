@@ -4,3 +4,6 @@ resumes/
 __pycache__/
 *.pyc
 .venv/
+
+# Local AI assistant configuration
+.agents/
