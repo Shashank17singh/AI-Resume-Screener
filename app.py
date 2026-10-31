@@ -10,7 +10,7 @@ import streamlit as st
 
 from llm_client import LLMError
 from parsing import parse_job_description
-from pipeline import screen_folder
+from pipeline import safe_filename, screen_folder
 
 st.set_page_config(page_title="AI Resume Screener", layout="wide")
 
@@ -58,7 +58,7 @@ if run_button:
     with tempfile.TemporaryDirectory() as tmp_dir:
         tmp_path = Path(tmp_dir)
         for uploaded in uploaded_files:
-            (tmp_path / uploaded.name).write_bytes(uploaded.getvalue())
+            (tmp_path / safe_filename(uploaded.name)).write_bytes(uploaded.getvalue())
 
         progress_bar = st.progress(0.0, text="Starting...")
 

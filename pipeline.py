@@ -5,7 +5,7 @@ File reading -> Parsing -> Scoring -> Ranking.
 
 import hashlib
 from dataclasses import dataclass, field
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 
 from file_readers import SUPPORTED_EXTENSIONS, read_resume
 from llm_client import LLMError
@@ -36,6 +36,11 @@ class ScreeningRun:
 
     def ranked(self) -> list[CandidateResult]:
         return sorted(self.successes, key=lambda r: r.match.score, reverse=True)
+
+
+def safe_filename(name: str) -> str:
+    """Drop directory parts from an uploaded file's name, which the client controls."""
+    return PurePosixPath(name.replace("\\", "/")).name or "resume.pdf"
 
 
 def _file_hash(file_path: Path) -> str:
