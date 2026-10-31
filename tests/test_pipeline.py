@@ -102,3 +102,17 @@ def test_progress_is_reported_for_each_file(
 def test_unknown_file_types_are_rejected(tmp_path: Path) -> None:
     with pytest.raises(UnsupportedFileTypeError):
         read_resume(tmp_path / "resume.exe")
+
+
+@pytest.mark.parametrize(
+    ("name", "expected"),
+    [
+        ("alice.pdf", "alice.pdf"),
+        ("../../etc/alice.pdf", "alice.pdf"),
+        ("/etc/alice.docx", "alice.docx"),
+        ("..\\..\\alice.pdf", "alice.pdf"),
+        ("", "resume.pdf"),
+    ],
+)
+def test_uploaded_names_cannot_leave_the_folder(name: str, expected: str) -> None:
+    assert pipeline.safe_filename(name) == expected
