@@ -1,0 +1,8 @@
+[theme]
+# Dark ink paper with one green for actions, set in serif like a CV.
+base = "dark"
+primaryColor = "#3c9d83"
+backgroundColor = "#181715"
+secondaryBackgroundColor = "#24221e"
+textColor = "#ece8df"
+font = "serif"
