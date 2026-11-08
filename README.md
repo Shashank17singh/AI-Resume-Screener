@@ -1,18 +1,6 @@
-<div align="center">
-
 # AI Resume Screener
 
-**An LLM-powered pipeline that parses resumes and job descriptions into structured data - then ranks candidates by fit**
-
-[![Streamlit](https://img.shields.io/badge/Streamlit-UI-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)](https://streamlit.io/)
-[![Groq](https://img.shields.io/badge/Groq-openai--gpt--oss--120b-F55036?style=for-the-badge&logoColor=white)](https://groq.com/)
-[![Pydantic](https://img.shields.io/badge/Pydantic-Schema%20Validation-E92063?style=for-the-badge&logo=pydantic&logoColor=white)](https://docs.pydantic.dev/)
-[![pypdf](https://img.shields.io/badge/pypdf-PDF%20Parsing-2C8EBB?style=for-the-badge&logoColor=white)](https://pypdf.readthedocs.io/)
-[![python--docx](https://img.shields.io/badge/python--docx-DOCX%20Parsing-2B579A?style=for-the-badge&logoColor=white)](https://python-docx.readthedocs.io/)
-
-</div>
-
----
+An LLM-powered pipeline that parses resumes and job descriptions into structured data, then ranks candidates by fit.
 
 ## Overview
 
