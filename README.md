@@ -2,13 +2,20 @@
 
 An LLM-powered pipeline that parses resumes and job descriptions into structured data, then ranks candidates by fit.
 
-## Overview
-
-An automated resume scoring tool that surfaces candidate skill alignments and gaps. It processes resumes in batches with caching and resilient API calls to Groq, presenting the results through a Streamlit interface.
+> **Live Deployments:**
+> * **Interactive Streamlit App:** [screen-resumes-ai.streamlit.app](https://screen-resumes-ai.streamlit.app/)
 
 ---
 
-### Extraction & Scoring Pipeline
+## Overview
+
+AI Resume Screener automates initial technical candidate screening by converting unstructured job descriptions and diverse candidate resumes (PDF/DOCX) into typed, validated data schemas. It evaluates candidate qualifications against role requirements, measures hard and soft skill alignment, quantifies years of relevant experience, and highlights skill gaps through an interactive Streamlit dashboard.
+
+The engine processes resumes in concurrent batches with cryptographic hashing cache layer and resilient exponential backoff calls to Groq's high-speed inference endpoints.
+
+---
+
+## Architecture Overview
 
 ```mermaid
 graph TD
@@ -41,54 +48,70 @@ graph TD
     class D,E,G logic;
 ```
 
-## Features
-
-|                              |                                                                                                                             |
-| ---------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
-| **Structured JD Parsing**    | Extracts role, required/preferred skills, minimum experience, education, and responsibilities from raw job description text |
-| **Multi-Resume Upload**      | Screen a whole batch of PDF/DOCX resumes in one run                                                                         |
-| **Schema-Driven Extraction** | Resumes are parsed into a fixed Pydantic schema regardless of formatting or section headings                                |
-| **Groq-Powered LLM**         | Fast structured-JSON inference via `openai/gpt-oss-120b`                                                                    |
-| **Retry with Backoff**       | LLM calls retry with exponential backoff instead of failing the whole batch on one hiccup                                   |
-| **Resume Caching**           | Parsed resumes are cached by file hash, so re-screening against a new JD skips redundant LLM calls                          |
-| **Per-File Error Isolation** | A corrupt or scanned resume is reported and skipped, not a batch-ending crash                                               |
-| **Ranked Shortlist UI**      | Clean Streamlit view of candidates sorted by match score, with skill gaps highlighted                                       |
-
----
-
-## Architecture
-
 ```
 Job Description (text)              Resumes (PDF / DOCX)
         │                                    │
         ▼                                    ▼
-  LLM → JobDescription schema      pypdf / python-docx → raw text
+   LLM → JobDescription schema      pypdf / python-docx → raw text
         │                                    │
         │                                    ▼
-        │                          LLM → Resume schema
-        │                          (cached by file hash)
+        │                          LLM → Resume schema (cached by SHA-256)
         │                                    │
         └───────────────┬────────────────────┘
-                         ▼
-              LLM → MatchResult schema
-        (score, matching/missing skills, verdict)
-                         │
-                         ▼
-              Ranked Shortlist (Streamlit)
+                        ▼
+             LLM → MatchResult schema
+       (score, matching/missing skills, verdict)
+                        │
+                        ▼
+             Ranked Shortlist (Streamlit)
 ```
 
 ---
 
-## Tech Stack
+## Features
 
-| Component         | Technology                                |
-| ----------------- | ----------------------------------------- |
-| Frontend          | Streamlit                                 |
-| LLM               | Groq - `openai/gpt-oss-120b`              |
-| Schema Validation | Pydantic                                  |
-| PDF Parsing       | pypdf                                     |
-| DOCX Parsing      | python-docx                               |
-| Resilience        | Custom retry/backoff wrapper + in-session cache |
+| Feature | Description |
+| ------- | ----------- |
+| **Structured JD Parsing** | Extracts role title, required/preferred skills, minimum experience, education, and key responsibilities |
+| **Multi-Resume Batching** | Concurrently screens candidate batches in PDF and DOCX formats |
+| **Schema-Driven Extraction** | Resumes are parsed into typed Pydantic models regardless of formatting or section conventions |
+| **Groq-Powered LLM** | Sub-second structured JSON extraction via Groq inference |
+| **Resilient Retry with Backoff** | API requests automatically retry with exponential backoff on rate limits |
+| **Content-Addressable Caching** | Resumes are cached by file hash to eliminate duplicate extraction on subsequent job runs |
+| **Per-File Error Isolation** | Corrupted or image-only documents are flagged and skipped without failing the batch |
+| **Ranked Shortlist Dashboard** | Interactive Streamlit interface sorted by match percentage with missing skills highlighted |
+
+---
+
+## Technology Stack
+
+| Component | Technology |
+| --------- | ---------- |
+| User Interface | Streamlit |
+| Inference Engine | Groq API |
+| Data Validation | Pydantic |
+| Document Extraction | pypdf, python-docx |
+| Packaging & Tools | pip, setuptools, ruff, pytest |
+| Containerization | Docker |
+
+---
+
+## Project Structure
+
+```
+AI-Resume-Screener/
+├── app.py              # Streamlit UI dashboard
+├── pipeline.py          # Batch screening pipeline, error isolation, and caching
+├── parsing.py           # Job description and resume parsing into Pydantic models
+├── scorer.py            # Candidate vs. role alignment scoring
+├── llm_client.py        # Groq client wrapper with exponential backoff
+├── file_readers.py      # PDF and DOCX text extraction utilities
+├── models.py            # Strict Pydantic schemas
+├── tests/               # Automated test suite
+├── Dockerfile           # Multi-stage container build
+├── requirements.txt     # Python dependencies
+└── README.md
+```
 
 ---
 
@@ -112,50 +135,58 @@ cd AI-Resume-Screener
 pip install -e .
 ```
 
-### 3. Set your Groq API key
+### 3. Configure environment variables
 
 ```bash
 cp .env.example .env
-# then edit .env and add: GROQ_API_KEY=your_api_key_here
+# Edit .env and supply your API key:
+# GROQ_API_KEY=your_api_key_here
 ```
 
-### 4. Run the app
+### 4. Run the application
 
 ```bash
 streamlit run app.py
 ```
 
-Open the local URL Streamlit prints in your terminal, paste a job description, upload resumes, and screen candidates.
-
 ---
 
-## Project Structure
+## Running the Tests
 
+Run the test suite using pytest:
+
+```bash
+pytest
 ```
-ai-resume-screener/
-├── app.py            # Streamlit UI
-├── pipeline.py        # Batch screening: caching + per-file error isolation
-├── parsing.py          # JD / resume → structured Pydantic data
-├── scorer.py            # Candidate vs. JD scoring
-├── llm_client.py          # Groq wrapper with retry/backoff
-├── file_readers.py         # PDF / DOCX text extraction
-├── models.py                # Pydantic schemas
-└── .env.example
+
+Run static linting with ruff:
+
+```bash
+ruff check .
 ```
 
 ---
 
 ## Deployment
 
-- **Dashboard URL:** https://screen-resumes-ai.streamlit.app/
+The application includes a production Dockerfile configured to run as a non-root user:
+
+```bash
+docker build -t ai-resume-screener .
+docker run -p 8501:8501 -e GROQ_API_KEY=your_key ai-resume-screener
+```
+
+Live deployment is hosted on Streamlit Community Cloud at [screen-resumes-ai.streamlit.app](https://screen-resumes-ai.streamlit.app/).
 
 ---
 
 ## Known Limitations
 
-- Scores are LLM-judged rather than a fixed formula, so they can vary slightly between runs on the same inputs.
-- Scanned/image-only PDFs with no extractable text are skipped (reported as a failure, not silently dropped).
+- Semantic matching scores incorporate LLM qualitative judgment and may exhibit slight variance across identical prompts; deterministic temperature parameters are enforced to minimize spread.
+- Scanned or rasterized PDF files lacking an embedded text layer require external OCR preprocessing before ingestion.
 
 ---
 
+## License
 
+This project is licensed under the MIT License. See [LICENSE](LICENSE) for details.
