@@ -1,9 +1,8 @@
 from pathlib import Path
 from types import SimpleNamespace
 
-import pytest
-
 import pipeline
+import pytest
 from file_readers import UnsupportedFileTypeError, read_resume
 from models import JobDescription, Resume
 

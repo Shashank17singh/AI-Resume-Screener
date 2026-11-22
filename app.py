@@ -7,7 +7,6 @@ import tempfile
 from pathlib import Path
 
 import streamlit as st
-
 from llm_client import LLMError
 from parsing import parse_job_description
 from pipeline import safe_filename, screen_folder
