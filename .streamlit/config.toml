@@ -1,8 +1,10 @@
+[client]
+showSidebarNavigation = false
+
 [theme]
-# Dark ink paper with one green for actions, set in serif like a CV.
 base = "dark"
-primaryColor = "#3c9d83"
-backgroundColor = "#181715"
-secondaryBackgroundColor = "#24221e"
-textColor = "#ece8df"
-font = "serif"
+primaryColor = "#10b981"
+backgroundColor = "#0d1117"
+secondaryBackgroundColor = "#161b22"
+textColor = "#f0f6fc"
+font = "sans-serif"
