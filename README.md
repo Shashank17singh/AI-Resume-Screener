@@ -180,10 +180,10 @@ Live deployment is hosted on Streamlit Community Cloud at [screen-resumes-ai.str
 
 ---
 
-## Known Limitations
+## Operational Considerations & Limitations
 
-- Semantic matching scores incorporate LLM qualitative judgment and may exhibit slight variance across identical prompts; deterministic temperature parameters are enforced to minimize spread.
-- Scanned or rasterized PDF files lacking an embedded text layer require external OCR preprocessing before ingestion.
+- **Scoring Determinism**: Semantic matching scores incorporate qualitative LLM evaluation; low-temperature inference is enforced to maintain consistent scoring distributions across evaluations.
+- **Document Preprocessing**: Scanned or rasterized PDF resumes lacking an embedded text layer require optical character recognition (OCR) preprocessing prior to text ingestion.
 
 ---
 
